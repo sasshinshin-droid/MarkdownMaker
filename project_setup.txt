@@ -1,0 +1,480 @@
+## requirements.txt
+
+```txt
+# Core dependencies
+python-pptx>=0.6.21
+markitdown>=0.0.1a2
+Pillow>=10.0.0
+pydantic>=2.0.0
+click>=8.1.0
+PyYAML>=6.0.1
+
+# File processing
+python-magic>=0.4.27
+pathlib2>=2.3.7
+chardet>=5.2.0
+
+# Logging and utilities
+colorlog>=6.7.0
+tqdm>=4.66.0
+watchdog>=3.0.0
+
+# Configuration and validation
+python-dotenv>=1.0.0
+jsonschema>=4.19.0
+
+# Optional AI/ML dependencies
+openai>=1.0.0
+anthropic>=0.7.0
+
+# Development dependencies (for local development)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.5.0
+isort>=5.12.0
+pre-commit>=3.3.0
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+```
+
+## setup.py
+
+```python
+#!/usr/bin/env python3
+"""
+Setup configuration for MarkdownMaker package.
+"""
+
+from setuptools import setup, find_packages
+from pathlib import Path
+
+# Read the contents of README file
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text(encoding='utf-8')
+
+# Read requirements
+def read_requirements(filename):
+    """Read requirements from file and return as list."""
+    with open(filename, 'r', encoding='utf-8') as f:
+        return [
+            line.strip() 
+            for line in f 
+            if line.strip() and not line.startswith('#')
+        ]
+
+# Core requirements (excluding dev dependencies)
+install_requires = [
+    "python-pptx>=0.6.21",
+    "markitdown>=0.0.1a2", 
+    "Pillow>=10.0.0",
+    "pydantic>=2.0.0",
+    "click>=8.1.0",
+    "PyYAML>=6.0.1",
+    "python-magic>=0.4.27",
+    "pathlib2>=2.3.7",
+    "chardet>=5.2.0",
+    "colorlog>=6.7.0",
+    "tqdm>=4.66.0",
+    "watchdog>=3.0.0",
+    "python-dotenv>=1.0.0",
+    "jsonschema>=4.19.0",
+]
+
+# Development requirements
+dev_requires = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.7.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.3.0",
+]
+
+# Documentation requirements
+docs_requires = [
+    "sphinx>=7.1.0",
+    "sphinx-rtd-theme>=1.3.0",
+]
+
+# AI/ML optional requirements
+ai_requires = [
+    "openai>=1.0.0",
+    "anthropic>=0.7.0",
+]
+
+setup(
+    name="markdownmaker",
+    version="1.0.0",
+    author="Your Name",
+    author_email="your.email@example.com",
+    description="AI-powered document conversion tool that transforms PowerPoint presentations and other documents into clean, structured Markdown files",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/yourusername/markdownmaker",
+    project_urls={
+        "Bug Tracker": "https://github.com/yourusername/markdownmaker/issues",
+        "Documentation": "https://markdownmaker.readthedocs.io/",
+        "Source Code": "https://github.com/yourusername/markdownmaker",
+    },
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Office/Business :: Office Suites",
+        "Topic :: Text Processing :: Markup :: Markdown",
+        "Topic :: Utilities",
+    ],
+    python_requires=">=3.8",
+    install_requires=install_requires,
+    extras_require={
+        "dev": dev_requires,
+        "docs": docs_requires,
+        "ai": ai_requires,
+        "all": dev_requires + docs_requires + ai_requires,
+    },
+    entry_points={
+        "console_scripts": [
+            "markdownmaker=markdownmaker.cli:main",
+            "mdmaker=markdownmaker.cli:main",
+        ],
+    },
+    include_package_data=True,
+    package_data={
+        "markdownmaker": [
+            "config/*.yaml",
+            "templates/*.md",
+            "assets/*",
+        ],
+    },
+    zip_safe=False,
+    keywords="markdown, powerpoint, conversion, ai, document-processing, pptx",
+)
+```
+
+## pyproject.toml
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markdownmaker"
+version = "1.0.0"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"},
+]
+description = "AI-powered document conversion tool that transforms PowerPoint presentations and other documents into clean, structured Markdown files"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Office Suites",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Utilities",
+]
+keywords = ["markdown", "powerpoint", "conversion", "ai", "document-processing", "pptx"]
+dependencies = [
+    "python-pptx>=0.6.21",
+    "markitdown>=0.0.1a2",
+    "Pillow>=10.0.0",
+    "pydantic>=2.0.0",
+    "click>=8.1.0",
+    "PyYAML>=6.0.1",
+    "python-magic>=0.4.27",
+    "pathlib2>=2.3.7",
+    "chardet>=5.2.0",
+    "colorlog>=6.7.0",
+    "tqdm>=4.66.0",
+    "watchdog>=3.0.0",
+    "python-dotenv>=1.0.0",
+    "jsonschema>=4.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.7.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.3.0",
+]
+docs = [
+    "sphinx>=7.1.0",
+    "sphinx-rtd-theme>=1.3.0",
+]
+ai = [
+    "openai>=1.0.0",
+    "anthropic>=0.7.0",
+]
+all = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.7.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.3.0",
+    "sphinx>=7.1.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "openai>=1.0.0",
+    "anthropic>=0.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/markdownmaker"
+Documentation = "https://markdownmaker.readthedocs.io/"
+Repository = "https://github.com/yourusername/markdownmaker.git"
+"Bug Tracker" = "https://github.com/yourusername/markdownmaker/issues"
+
+[project.scripts]
+markdownmaker = "markdownmaker.cli:main"
+mdmaker = "markdownmaker.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+markdownmaker = ["config/*.yaml", "templates/*.md", "assets/*"]
+
+# Black configuration
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort configuration
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+# mypy configuration
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "pptx.*",
+    "markitdown.*",
+    "magic.*",
+]
+ignore_missing_imports = true
+
+# pytest configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+```
+
+## README.md
+
+```markdown
+# MarkdownMaker
+
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI version](https://badge.fury.io/py/markdownmaker.svg)](https://badge.fury.io/py/markdownmaker)
+
+An AI-powered document conversion tool that transforms PowerPoint presentations and other documents into clean, structured Markdown files. MarkdownMaker leverages advanced AI processing to extract content intelligently while preserving document structure and formatting.
+
+## 🚀 Features
+
+- **PowerPoint to Markdown**: Convert PPTX files to clean, structured Markdown
+- **AI-Powered Processing**: Intelligent content extraction and formatting
+- **Batch Processing**: Convert multiple files at once
+- **Customizable Output**: Flexible formatting options and templates
+- **Image Extraction**: Automatic extraction and linking of embedded images
+- **Structure Preservation**: Maintains slide hierarchy and content organization
+- **CLI Interface**: Easy-to-use command-line interface
+- **Configuration**: Extensive customization through YAML configuration files
+- **Multiple Formats**: Support for various input document formats
+
+## 📦 Installation
+
+### From PyPI (Recommended)
+
+```bash
+pip install markdownmaker
+```
+
+### From Source
+
+```bash
+git clone https://github.com/yourusername/markdownmaker.git
+cd markdownmaker
+pip install -e .
+```
+
+### Development Installation
+
+```bash
+git clone https://github.com/yourusername/markdownmaker.git
+cd markdownmaker
+pip install -e ".[dev]"
+```
+
+## 🛠 Quick Start
+
+### Basic Usage
+
+Convert a single PowerPoint file:
+
+```bash
+markdownmaker convert presentation.pptx
+```
+
+Convert with custom output directory:
+
+```bash
+markdownmaker convert presentation.pptx --output ./output/
+```
+
+Batch convert multiple files:
+
+```bash
+markdownmaker convert *.pptx --output ./markdown_files/
+```
+
+### CLI Commands
+
+#### Convert Command
+
+```bash
+markdownmaker convert [OPTIONS] INPUT_FILES...
+
+Options:
+  -o, --output PATH          Output directory (default: current directory)
+  -f, --format TEXT          Output format (default: markdown)
+  -t, --template TEXT        Template to use for conversion
+  -c, --config PATH          Configuration file path
+  --extract-images          Extract and save images
+  --image-dir PATH          Directory for extracted images
+  --preserve-structure      Preserve original document structure
+  --ai-enhance              Enable AI-powered content enhancement
+  --batch-size INTEGER      Batch processing size (default: 10)
+  --verbose                 Enable verbose logging
+  --help                    Show this message and exit
+```
+
+#### Configuration Command
+
+```bash
+markdownmaker config [OPTIONS]
+
+Options:
+  --init                    Initialize default configuration
+  --edit                    Open configuration file in editor
+  --validate               Validate configuration file
+  --show                   Display current configuration
+```
+
+#### Template Management
+
+```bash
+markdownmaker template [OPTIONS] COMMAND
+
+Commands:
+  list                     List available templates
+  create NAME              Create new template
+  edit NAME                Edit existing template
+  delete NAME              Delete template
+```
+
+## ⚙️ Configuration
+
+MarkdownMaker uses YAML
